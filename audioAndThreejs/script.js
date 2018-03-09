@@ -1,3 +1,18 @@
+(function (){
+  const canvas = document.getElementById('canvas');
+  const container = document.getElementById('wrapper');
+  sizing();
+
+  function sizing() {
+    canvas.height = container.offsetHeight;
+    canvas.width = container.offsetWidth;
+  }
+
+  window.addEventListener('resize', function(){
+    (!window.requestAnimationFrame) ? setTimeout(sizing, 300): window.requestAnimationFrame(sizing);
+  });
+})();
+
 window.addEventListener('load', init);
 
 function init() {
