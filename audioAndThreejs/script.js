@@ -63,9 +63,9 @@ function init() {
 
           for (let i=0; i<LENGTH; i++) {
             const s = frequency[i] * 0.01;
-            const x = 1 * (1 - s) + 0.0001;
-            const y = 1 * (1 - s) + 0.0001;
-            const z = 1 * (1 - s) + 0.0001;
+            const x = 1 * s + 0.0001;
+            const y = 1 * s + 0.0001;
+            const z = 1 * s + 0.0001;
             meshes[i].scale.set(x, y, z);
           }
           group.rotation.x += 0.0005;
