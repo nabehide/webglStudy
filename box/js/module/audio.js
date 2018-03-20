@@ -38,7 +38,11 @@ class Audio{
     const constraints = {audio: true, video: false};
     const _this = this;
 
-    navigator.mediaDevices.getUserMedia(constraints).then(_handleSuccess)
+    // navigator.mediaDevices.getUserMedia(constraints).then(_handleSuccess)
+    navigator.getUserMedia(
+      constraints,
+      _handleSuccess, _handleError
+    );
     function _handleSuccess(stream){
       const wrap = document.getElementById("overlayWrap");
       const btn = document.getElementById("overlay");
@@ -49,6 +53,8 @@ class Audio{
       wrap.style.zIndex = -100;
         _handleClick(stream);
       }, false);
+    }
+    function _handleError(){
     }
 
     function _handleClick(stream){
