@@ -20,18 +20,28 @@ class Audio{
 
     function _handleSuccess(evt) {
 
+      /*
       const wrap = document.getElementById("overlayWrap");
-      const btn = document.getElementById("overlay");
       wrap.style.zIndex = 100;
       btn.style.zIndex = 101;
+      */
+      const btn = document.getElementById("overlay");
+      btn.classList.remove("off");
+      const help = document.getElementById("helpIcon");
+      help.classList.remove("openNav");
+      const helpDiv = document.getElementById("helpDiv");
+      helpDiv.classList.remove("openNav");
 
       btn.addEventListener("click", () => {
 
         /*
         btn.classList.add("off");
-        */
         wrap.style.zIndex = -100;
         btn.style.zIndex = -100;
+        */
+        btn.classList.add("off");
+        help.classList.add("openNav");
+        helpDiv.classList.add("openNav");
 
         _handleClick(evt);
       }, false);
