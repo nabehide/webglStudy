@@ -1,78 +1,266 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+/* common */
+
+html, body {
+  font-family: Verdana, sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+
+  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
+  overflow: hidden;
 }
 
-html {
-  line-height: 1;
+/* list */
+nav {
+  display: table-cell;
+  vertical-align: bottom;
 }
+ul {
+  line-height: 2;
+  margin: 10px 10px;
 
-ol, ul {
   list-style: none;
+  -webkit-padding-start: 0;
+  text-align: center;
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-q, blockquote {
-  quotes: none;
-}
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-a img {
-  border: none;
-}
-
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  height: 100%;
-  font: 20px "Rubik Mono One", sans-serif;
-  align-items: center;
-  justify-content: center;
-  background: #e3e3e3;
-}
-
-a {
-  color: #3e3e3e;
-}
-
-#ver{
-  font-size: 10px;
+/* hide */
+header nav {
   position: absolute;
-  bottom: 10px;
+  right: 0;
+  top: -100000px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+
+/* menu icon */
+#navToggle {
+  position: absolute;
+}
+#helpToggle{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+#soundToggle {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+
+#navDiv, #helpDiv, #soundDiv {
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+}
+#helpIcon, #soundIcon{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#bar1, #bar2, #bar3 {
+  display: block;
+  position: absolute;
+  width: 100%;
+
+  border-bottom: solid 3px #999;
+  transition: .35s ease-in-out;
+
+  z-index: 1;
+}
+
+/* open menu */
+#navToggle .openNav span:nth-child(1) {
+  transform: rotate(-45deg);
+}
+#navToggle .openNav span:nth-child(2),
+#navToggle .openNav span:nth-child(3) {
+  transform: rotate(45deg);
+}
+.openNav nav {
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+/* menu */
+.scene{
+  cursor: pointer;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.3);
+}
+.selectedScene{
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.9);
+}
+
+/* overlay */
+#overlayWrap{
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+}
+#overlay{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+
+  width: 80px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);;
+  padding: 8px;
+  border: solid 3px rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+}
+
+/* canvas */
+body #wrapper{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+#canvas {
+  display: block;
+  z-index: 0;
+}
+
+.linkIcon{
+  margin: 5px;
+}
+
+a:link, a:visited, a:active{
+  color: rgba(255, 255, 255, 0.3);
+}
+a.linkIcon:hover{
+  color: rgba(255, 255, 255, 0.9);
+}
+a.scene:hover{
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.9);
+}
+a:active{
+  color: rgba(255, 255, 255, 0.3);
+}
+
+img {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.icon {
+  text-align: center;
+}
+
+#soundCard{
+  width: 100%;
+  height: 100%;
+}
+
+@media(min-width: 0px){
+  html, body{
+    font-size: 28px;
+  }header nav {
+    width: 60%;
+  }
+  #navToggle{
+    margin: 50px;
+    width: 60px;
+    height: 50px;
+  }
+  #navDiv{
+    height: 50px;
+  }
+  #navToggle span:nth-child(1) {top:0px}
+  #navToggle span:nth-child(2) {top:22px}
+  #navToggle span:nth-child(3) {top:44px}
+  #navToggle .openNav span {top: 22px}
+
+  #helpToggle{
+    margin: 40px;
+    width: 60px;
+    height: 50px;
+  }
+  #helpDiv{
+    height: 50px;
+  }
+
+  #soundToggle{
+    margin: 40px;
+    width: 60px;
+    height: 50px;
+  }
+  #soundDiv{
+    height: 50px;
+  }
+
+  img, #soundcloud{
+    width: 64px;
+    height: 64px;
+  }
+  #soundcloud{
+    transform: scale(2);
+    transform-origin: 0 0;
+  }
+}
+
+@media(min-width: 1000px){
+  html, body{
+    font-size: 14px;
+  }
+  header nav {
+    width: 30%;
+  }
+  #navToggle{
+    margin: 20px;
+    width: 30px;
+    height: 25px;
+  }
+  #navDiv{
+    height: 25px;
+  }
+  #navToggle span:nth-child(1) {top:0px}
+  #navToggle span:nth-child(2) {top:11px}
+  #navToggle span:nth-child(3) {top:22px}
+  #navToggle .openNav span {top: 11px}
+
+  #helpToggle{
+    margin: 20px;
+    width: 30px;
+    height: 25px;
+  }
+  #helpDiv{
+    height: 25px;
+  }
+
+  #soundToggle{
+    margin: 20px;
+    width: 30px;
+    height: 25px;
+  }
+  #soundDiv{
+    height: 25px;
+  }
+
+  img, #soundcloud{
+    width: 32px;
+    height: 32px;
+  }
+  #soundcloud{
+    transform: scale(1);
+    transform-origin: 0 0;
+  }
+}
+
+.openNav #helpIcon, .openNav #soundIcon{
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.openNav #bar1, .openNav #bar2, .openNav #bar3{
+  border-bottom: solid 3px rgba(255, 255, 255, 0.9);
 }

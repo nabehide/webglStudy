@@ -58,14 +58,14 @@ class Webgl{
 
   render(){
     for(let i=0; i<this.meshes.length; i++){
-      this.meshes[0].render()
+      this.meshes[i].render()
     }
     this.renderer.render(this.scene, this.camera);
   }
 
   render_random(){
     for(let i=0; i<this.meshes.length; i++){
-      this.meshes[0].render_random()
+      this.meshes[i].render_random()
     }
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.render_random.bind(this));
