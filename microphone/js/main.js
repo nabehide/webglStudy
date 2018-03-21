@@ -1,23 +1,37 @@
-
 window.onload = function(){
 
   "use strict";
 
-  /*
-  let webgl = new Webgl();
-  webgl.mesh.push(new Box(webgl));
-  webgl.audio = new Audio(webgl);
-  webgl.mesh[0].setVisible(true);
-  webgl.audio.start();
-  */
-  let btn    = document.getElementById("overlay"),
-      canvas = document.getElementById("canvas"),
-      ctx    = canvas.getContext("2d");
-  
+  const width = 600;
+  const height = 600;
+
+  this.scene = new THREE.Scene();
+  this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+  this.renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector("#canvas")
+  })
+  this.renderer.setPixelRatio(window.devicePixelRatio);
+  this.renderer.setClearColor(0x000000, 1);
+  this.renderer.setSize(width, height);
+  this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+  this.control.enabled = true;
+
+  const geometry = new THREE.BoxGeometry(100, 100, 100);
+  const material = new THREE.MeshNormalMaterial();
+  this.mesh = new THREE.Mesh(geometry, material);
+  this.scene.add(this.mesh)
+
+  this.camera.position.set(0, 500, +1000);
+  this.camera.lookAt(this.scene.position);
+
+  const _this = this
+
+  const btn = document.getElementById("overlay");
+
   navigator.getUserMedia({
     audio: true
   }, _handleSuccess, _handleError);
-  
+
   function _handleSuccess(evt) {
     btn.addEventListener("click", () => {
       _handleClick(evt);
@@ -29,36 +43,38 @@ window.onload = function(){
   }
 
   function _handleClick(evt) {
-    let LENGTH   = 16,
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)(),
-        options  = {
-          mediaStream : evt
-        },
-        src      = audioCtx.createMediaStreamSource(evt),
-        analyser = audioCtx.createAnalyser(evt),
-        data   = new Uint8Array(LENGTH),
-        w      = 0,
-        i      = 0;
+    const LENGTH = 16;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const options  = {mediaStream : evt};
+    const src = audioCtx.createMediaStreamSource(evt);
+    const analyser = audioCtx.createAnalyser(evt);
+    const data = new Uint8Array(LENGTH);
 
     btn.classList.add("off");
     analyser.fftSize = 1024;
     src.connect(analyser);
 
-    setInterval(() => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      ctx.fillStyle = "#3e3e3e";
-
-      w = canvas.width / LENGTH,
+    (function animation(){
+      _this.renderer.render(_this.scene, _this.camera);
 
       analyser.getByteFrequencyData(data);
 
-      for (i = 0; i < LENGTH; ++i) {
-        ctx.rect(i * w, canvas.height - data[i] * 2, w, data[i] * 2);
-      }
+      _this.mesh.scale.set(
+        data[1] / 50 + 0.0001,
+        data[2] / 50 + 0.0001,
+        data[3] / 50 + 0.0001,
+      );
 
-      ctx.fill();
-    }, 20);
+      _this.mesh.rotation.y += 0.01;
+
+      requestAnimationFrame(animation);
+    })();
   }
+  /*
+  let webgl = new Webgl();
+  webgl.mesh.push(new Box(webgl));
+  webgl.audio = new Audio(webgl);
+  webgl.mesh[0].setVisible(true);
+  webgl.audio.start();
+  */
 }
