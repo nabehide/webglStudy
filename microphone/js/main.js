@@ -13,40 +13,25 @@ class Box{
 
   render(){
     this.mesh.scale.set(
-      this.webgl.data[1] / 50 + 0.0001,
-      this.webgl.data[2] / 50 + 0.0001,
-      this.webgl.data[3] / 50 + 0.0001,
+      this.webgl.audio.data[1] / 50 + 0.0001,
+      this.webgl.audio.data[2] / 50 + 0.0001,
+      this.webgl.audio.data[3] / 50 + 0.0001,
     );
 
     this.mesh.rotation.y += 0.01;
   }
 }
 
-class Webgl{
-  constructor(){
+class Audio{
+  constructor(webgl){
+    this.webgl = webgl;
     this.init();
   }
 
   init(){
-    const width = 600;
-    const height = 600;
+  }
 
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: document.querySelector("#canvas")
-    })
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setClearColor(0x000000, 1);
-    this.renderer.setSize(width, height);
-    this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-    this.control.enabled = true;
-
-    this.meshes = [];
-
-    this.camera.position.set(0, 500, +1000);
-    this.camera.lookAt(this.scene.position);
-
+  start(){
     const _this = this
 
     const btn = document.getElementById("overlay");
@@ -81,19 +66,48 @@ class Webgl{
       src.connect(analyser);
 
       (function animation(){
-        _this.renderer.render(_this.scene, _this.camera);
-
         analyser.getByteFrequencyData(_this.data);
 
-        _this.render();
+        _this.webgl.render();
 
         requestAnimationFrame(animation);
       })();
     }
   }
+}
+
+class Webgl{
+  constructor(){
+    this.init();
+  }
+
+  init(){
+    const width = 600;
+    const height = 600;
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: document.querySelector("#canvas")
+    })
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setClearColor(0x000000, 1);
+    this.renderer.setSize(width, height);
+    this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.control.enabled = true;
+
+    this.meshes = [];
+
+    this.camera.position.set(0, 500, +1000);
+    this.camera.lookAt(this.scene.position);
+
+  }
 
   render(){
-    this.meshes[0].render()
+    for(let i=0; i<this.meshes.length; i++){
+      this.meshes[0].render()
+    }
+    this.renderer.render(this.scene, this.camera);
   }
 }
 
@@ -103,6 +117,9 @@ window.onload = function(){
 
   const webgl = new Webgl();
   webgl.meshes.push(new Box(webgl));
+
+  webgl.audio = new Audio(webgl);
+  webgl.audio.start();
 
   /*
   let webgl = new Webgl();
