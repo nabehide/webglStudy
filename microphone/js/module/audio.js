@@ -73,9 +73,14 @@ class Audio{
       const src = audioContext.createMediaStreamSource(stream)
       src.connect(_this.analyser);
 
+      _this.data = new Uint8Array(1024),
+
       (function animation(){
+        /*
         _this.analyser.getFloatTimeDomainData(_this.timeDomain);
         _this.analyser.getByteFrequencyData(_this.frequency);
+        */
+        _this.analyser.getByteFrequencyData(_this.data);
 
         _this.webgl.render();
 
