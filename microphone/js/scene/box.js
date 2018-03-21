@@ -59,11 +59,6 @@ class Box{
       this.webgl.audio.data[x] / 100 * (this.parameter.maxSizeX - this.parameter.minSizeX) + this.parameter.minSizeX,
       this.webgl.audio.data[y] / 100 * (this.parameter.maxSizeY - this.parameter.minSizeY) + this.parameter.minSizeY,
       this.webgl.audio.data[z] / 100 * (this.parameter.maxSizeZ - this.parameter.minSizeZ) + this.parameter.minSizeZ
-      /*
-      this.webgl.audio.frequency[x] / 100 * (this.parameter.maxSizeX - this.parameter.minSizeX) + this.parameter.minSizeX,
-      this.webgl.audio.frequency[y] / 100 * (this.parameter.maxSizeY - this.parameter.minSizeY) + this.parameter.minSizeY,
-      this.webgl.audio.frequency[z] / 100 * (this.parameter.maxSizeZ - this.parameter.minSizeZ) + this.parameter.minSizeZ
-      */
     );
 
     this.mesh.rotation.y += this.parameter.speed;

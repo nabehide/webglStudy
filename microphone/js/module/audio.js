@@ -25,7 +25,10 @@ class Audio{
   start(){
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.analyser = audioContext.createAnalyser();
-    this.analyser.fftSize = 1024;
+    this.analyser.fftSize = 2048;
+
+    this.bufferLengthAlt = this.analyser.frequencyBinCount;
+    this.data = new Uint8Array(this.bufferLengthAlt);
 
     if (!navigator.mediaDevices){
       console.log("getUserMedia() is NOT supported.");
@@ -51,7 +54,6 @@ class Audio{
       btn.style.zIndex = 101;
       */
 
-      // btn.addEventListener("click", () => {
       btn.addEventListener("click", function(){
 
         btn.classList.add("off");
@@ -71,7 +73,7 @@ class Audio{
       const src = audioContext.createMediaStreamSource(stream)
       src.connect(_this.analyser);
 
-      _this.data = new Uint8Array(1024),
+      // _this.data = new Uint8Array(_this.analyser.fftSize),
 
       (function animation(){
         _this.analyser.getByteFrequencyData(_this.data);
