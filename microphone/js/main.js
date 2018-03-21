@@ -1,3 +1,30 @@
+class ResizeWatch{
+  constructor(){
+    this.instances = [];
+
+    this.width = this._width = document.body.clientWidth;
+    this.height = this._height = window.innerHeight;
+    this.aspect = this.width / this.height;
+
+    window.onresize = function(){
+      if(this.instances.length === 0) return;
+
+      this.width = document.body.clientWidth;
+      this.height = window.innerHeight;
+      this.aspect = this.width / this.height;
+
+      for(let i=0; i<this.instances.length; i++){
+        this.instances[i].resizeUpdate();
+      }
+    }.bind(this)
+  }
+
+  register(instance){
+    this.instances.push(instance);
+  }
+}
+window.ResizeWatch = new ResizeWatch();
+
 class Box{
   constructor(webgl){
     this.webgl = webgl;
@@ -82,17 +109,21 @@ class Webgl{
   }
 
   init(){
-    const width = 600;
-    const height = 600;
+    window.ResizeWatch.register(this);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+
+    this.setProps();
+
+    this.camera = new THREE.PerspectiveCamera(this.props.fov, this.props.aspect, this.props.near, this.props.far);
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: document.querySelector("#canvas")
     })
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor(0x000000, 1);
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(window.ResizeWatch.width, window.ResizeWatch.height);
+
     this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.control.enabled = true;
 
@@ -101,7 +132,34 @@ class Webgl{
     this.camera.position.set(0, 500, +1000);
     this.camera.lookAt(this.scene.position);
 
+    this.resizeUpdate();
   }
+
+  resizeUpdate(){
+    this.setProps();
+    this.renderer.setSize(this.props.width, this.props.height);
+    this.camera.aspect = this.props.aspect;
+  }
+
+  setProps(){
+    const width = window.ResizeWatch.width;
+    const height = window.ResizeWatch.height;
+    const aspect = width / height;
+
+    this.props = {
+      width: width,
+      height: height,
+      aspect: aspect,
+      fov: 45,
+      left: -width / 2,
+      right: width / 2,
+      top: height / 2,
+      bottom: -height / 2,
+      near: 0.1,
+      far: 10000,
+      parent: document.getElementById("wrapper"),
+    };
+  };
 
   render(){
     for(let i=0; i<this.meshes.length; i++){
