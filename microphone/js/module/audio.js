@@ -25,8 +25,6 @@ class Audio{
   start(){
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.analyser = audioContext.createAnalyser();
-    this.timeDomain = new Float32Array(this.analyser.frequencyBinCount);
-    this.frequency = new Uint8Array(this.analyser.frequencyBinCount);
     this.analyser.fftSize = 1024;
 
     if (!navigator.mediaDevices){
@@ -35,10 +33,8 @@ class Audio{
       console.log("getUserMedia() is supported.");
     }
 
-    // var constraints = {audio: true, video: false};
     const _this = this;
 
-    // navigator.mediaDevices.getUserMedia(constraints).then(_handleSuccess)
     // navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
     navigator.getUserMedia({
       audio: true
@@ -76,10 +72,6 @@ class Audio{
       _this.data = new Uint8Array(1024),
 
       (function animation(){
-        /*
-        _this.analyser.getFloatTimeDomainData(_this.timeDomain);
-        _this.analyser.getByteFrequencyData(_this.frequency);
-        */
         _this.analyser.getByteFrequencyData(_this.data);
 
         _this.webgl.render();
