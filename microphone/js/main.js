@@ -1,4 +1,4 @@
-(function() {
+window.onload = function(){
 
   "use strict";
   
@@ -53,5 +53,4 @@
       ctx.fill();
     }, 20);
   }
-
-})();
+}
