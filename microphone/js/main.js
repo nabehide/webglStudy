@@ -1,9 +1,24 @@
 class Box{
-  constructor(){
+  constructor(webgl){
+    this.webgl = webgl;
     this.init();
   }
 
   init(){
+    const geometry = new THREE.BoxGeometry(100, 100, 100);
+    const material = new THREE.MeshNormalMaterial();
+    this.mesh = new THREE.Mesh(geometry, material);
+    this.webgl.scene.add(this.mesh)
+  }
+
+  render(){
+    this.mesh.scale.set(
+      data[1] / 50 + 0.0001,
+      data[2] / 50 + 0.0001,
+      data[3] / 50 + 0.0001,
+    );
+
+    this.mesh.rotation.y += 0.01;
   }
 }
 
@@ -27,10 +42,7 @@ class Webgl{
     this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.control.enabled = true;
 
-    const geometry = new THREE.BoxGeometry(100, 100, 100);
-    const material = new THREE.MeshNormalMaterial();
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(this.mesh)
+    this.meshes = [];
 
     this.camera.position.set(0, 500, +1000);
     this.camera.lookAt(this.scene.position);
@@ -70,17 +82,15 @@ class Webgl{
 
         analyser.getByteFrequencyData(data);
 
-        _this.mesh.scale.set(
-          data[1] / 50 + 0.0001,
-          data[2] / 50 + 0.0001,
-          data[3] / 50 + 0.0001,
-        );
-
-        _this.mesh.rotation.y += 0.01;
+        this.render();
 
         requestAnimationFrame(animation);
       })();
     }
+  }
+
+  render(){
+    this.meshes[0].render()
   }
 }
 
@@ -89,7 +99,7 @@ window.onload = function(){
   "use strict";
 
   const webgl = new Webgl();
-
+  webgl.meshes.push(Box(webgl));
 
   /*
   let webgl = new Webgl();
