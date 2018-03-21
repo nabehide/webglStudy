@@ -1,82 +1,48 @@
 class Audio{
   constructor(webgl){
     this.webgl = webgl;
-    this.isReady = false;
-
     this.init();
   }
 
   init(){
-
-    /*
-    navigator.mediaDevices = navigator.mediaDevices || ((navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
-      getUserMedia: function(c) {
-        return new Promise(function(y, n) {
-          (navigator.mozGetUserMedia ||
-           navigator.webkitGetUserMedia).call(navigator, c, y, n)
-        });
-      }
-    } : null);
-    */
-
-    this.webgl.render_random();
   }
 
   start(){
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    this.analyser = audioContext.createAnalyser();
-    this.analyser.fftSize = 2048;
+    const _this = this
 
-    this.bufferLengthAlt = this.analyser.frequencyBinCount;
-    this.data = new Uint8Array(this.bufferLengthAlt);
+    const btn = document.getElementById("overlay");
 
-    if (!navigator.mediaDevices){
-      console.log("getUserMedia() is NOT supported.");
-    }else{
-      console.log("getUserMedia() is supported.");
-    }
-
-    const _this = this;
-
-    navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
     /*
     navigator.getUserMedia({
       audio: true
     }, _handleSuccess, _handleError);
     */
+    navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
 
-    function _handleSuccess(stream){
-      const wrap = document.getElementById("overlayWrap");
-      const btn = document.getElementById("overlay");
-
-      /*
-      wrap.style.zIndex = 100;
-      btn.style.zIndex = 101;
-      */
-
-      btn.addEventListener("click", function(){
-
-        btn.classList.add("off");
-        /*
-        btn.style.zIndex = -100;
-        wrap.style.zIndex = -100;
-        */
-
-        _handleClick(stream);
+    function _handleSuccess(evt) {
+      btn.addEventListener("click", () => {
+        _handleClick(evt);
       }, false);
     }
-    function _handleError(){
-      alert("error");
+
+    function _handleError() {
+      alert("Error!");
     }
 
-    function _handleClick(stream){
-      const src = audioContext.createMediaStreamSource(stream)
-      src.connect(_this.analyser);
+    function _handleClick(evt) {
+      const LENGTH = 16;
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const options  = {mediaStream : evt};
+      const src = audioCtx.createMediaStreamSource(evt);
+      const analyser = audioCtx.createAnalyser(evt);
+      _this.data = new Uint8Array(LENGTH);
 
-      // _this.data = new Uint8Array(_this.analyser.fftSize),
+      btn.classList.add("off");
+      analyser.fftSize = 1024;
+      src.connect(analyser);
 
       (function animation(){
-        _this.analyser.getByteFrequencyData(_this.data);
+        analyser.getByteFrequencyData(_this.data);
 
         _this.webgl.render();
 

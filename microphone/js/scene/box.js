@@ -1,3 +1,28 @@
+class Box{
+  constructor(webgl){
+    this.webgl = webgl;
+    this.init();
+  }
+
+  init(){
+    const geometry = new THREE.BoxGeometry(100, 100, 100);
+    const material = new THREE.MeshNormalMaterial();
+    this.mesh = new THREE.Mesh(geometry, material);
+    this.webgl.scene.add(this.mesh)
+  }
+
+  render(){
+    this.mesh.scale.set(
+      this.webgl.audio.data[1] / 50 + 0.0001,
+      this.webgl.audio.data[2] / 50 + 0.0001,
+      this.webgl.audio.data[3] / 50 + 0.0001,
+    );
+
+    this.mesh.rotation.y += 0.01;
+  }
+}
+
+/*
 function normRand(m, s){
   const a = 1 - Math.random();
   const b = 1 - Math.random();
@@ -90,3 +115,4 @@ const Parameter_box = function(){
   this.minSizeZ = 0.1;
   this.freqZ = 600;
 }
+*/

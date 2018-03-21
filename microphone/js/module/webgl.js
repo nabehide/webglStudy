@@ -6,38 +6,34 @@ class Webgl{
   init(){
     window.ResizeWatch.register(this);
 
-    this.rot = 0;
-  
     this.scene = new THREE.Scene();
 
-    this.gui = new dat.GUI();
-    this.gui.close();
-
     this.setProps();
-  
+
     this.camera = new THREE.PerspectiveCamera(this.props.fov, this.props.aspect, this.props.near, this.props.far);
-  
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: document.querySelector("#canvas")
     })
-    /*
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true
-    })
-    this.div = document.getElementById("wrapper");
-    this.div.appendChild(this.renderer.domElement);
-    */
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.setSize(window.ResizeWatch.width, window.ResizeWatch.height);
 
     this.control = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.control.enabled = true;
 
-    this.mesh = [];
+    this.meshes = [];
+
+    this.camera.position.set(0, 500, +1000);
+    this.camera.lookAt(this.scene.position);
 
     this.resizeUpdate();
-    // this.render();
+  }
+
+  resizeUpdate(){
+    this.setProps();
+    this.renderer.setSize(this.props.width, this.props.height);
+    this.camera.aspect = this.props.aspect;
   }
 
   setProps(){
@@ -60,29 +56,10 @@ class Webgl{
     };
   };
 
-  resizeUpdate(){
-    this.setProps();
-    this.renderer.setSize(this.props.width, this.props.height);
-    this.camera.aspect = this.props.aspect;
-  }
-
   render(){
-    for(let i=0; i<this.mesh.length; i++){
-      this.mesh[i].render();
+    for(let i=0; i<this.meshes.length; i++){
+      this.meshes[0].render()
     }
     this.renderer.render(this.scene, this.camera);
-  }
-
-  render_random(){
-    for(let i=0; i<this.mesh.length; i++){
-      this.mesh[i].render_random();
-    }
-    this.renderer.render(this.scene, this.camera);
-
-    // if(this.audio !== undefined){
-    //   $("canvas").stop();
-    // }
-
-    requestAnimationFrame(this.render_random.bind(this));
   }
 }
