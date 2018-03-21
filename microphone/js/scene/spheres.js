@@ -30,7 +30,7 @@ class Spheres{
   createMesh(){
     const SIZE = 1500;
     const SCALE = 30;
-    this.MAX_LENGTH = 1024;
+    this.MAX_LENGTH = 256;
     this.LENGTH = 64;
 
     this.group = new THREE.Group();

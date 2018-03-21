@@ -25,10 +25,10 @@ class Particles{
   }
 
   createMesh(){
-    const SIZE = 2000;
+    const SIZE = 1000;
     const SCALE = 30;
-    this.MAX_LENGTH = 1024;
-    this.LENGTH = 128;
+    this.MAX_LENGTH = 256;
+    this.LENGTH = 64;
 
     this.group = new THREE.Group();
     this.webgl.scene.add(this.group);
