@@ -51,9 +51,12 @@ class Webgl{
 
     const btn = document.getElementById("overlay");
 
+    /*
     navigator.getUserMedia({
       audio: true
     }, _handleSuccess, _handleError);
+    */
+    navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
 
     function _handleSuccess(evt) {
       btn.addEventListener("click", () => {
