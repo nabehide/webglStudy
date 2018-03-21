@@ -70,3 +70,9 @@ body {
 a {
   color: #3e3e3e;
 }
+
+#ver{
+  font-size: 10px;
+  position: absolute;
+  top: 10px;
+}
