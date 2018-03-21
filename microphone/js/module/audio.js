@@ -35,10 +35,12 @@ class Audio{
 
     const _this = this;
 
-    // navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
+    navigator.mediaDevices.getUserMedia({audio: true}).then(_handleSuccess)
+    /*
     navigator.getUserMedia({
       audio: true
     }, _handleSuccess, _handleError);
+    */
 
     function _handleSuccess(stream){
       var wrap = document.getElementById("overlayWrap");
