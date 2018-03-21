@@ -1,16 +1,16 @@
 
 window.onload = function(){
 
-  let webgl = new Webgl();
-
   "use strict";
 
+  /*
+  let webgl = new Webgl();
   webgl.mesh.push(new Box(webgl));
   webgl.audio = new Audio(webgl);
   webgl.mesh[0].setVisible(true);
   webgl.audio.start();
-  /*
-  let btn    = document.getElementById("overwrap"),
+  */
+  let btn    = document.getElementById("overlay"),
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d");
   
@@ -61,5 +61,4 @@ window.onload = function(){
       ctx.fill();
     }, 20);
   }
-  */
 }
