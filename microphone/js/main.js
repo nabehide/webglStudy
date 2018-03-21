@@ -13,9 +13,9 @@ class Box{
 
   render(){
     this.mesh.scale.set(
-      data[1] / 50 + 0.0001,
-      data[2] / 50 + 0.0001,
-      data[3] / 50 + 0.0001,
+      this.webgl.data[1] / 50 + 0.0001,
+      this.webgl.data[2] / 50 + 0.0001,
+      this.webgl.data[3] / 50 + 0.0001,
     );
 
     this.mesh.rotation.y += 0.01;
@@ -71,7 +71,7 @@ class Webgl{
       const options  = {mediaStream : evt};
       const src = audioCtx.createMediaStreamSource(evt);
       const analyser = audioCtx.createAnalyser(evt);
-      const data = new Uint8Array(LENGTH);
+      _this.data = new Uint8Array(LENGTH);
 
       btn.classList.add("off");
       analyser.fftSize = 1024;
@@ -80,9 +80,9 @@ class Webgl{
       (function animation(){
         _this.renderer.render(_this.scene, _this.camera);
 
-        analyser.getByteFrequencyData(data);
+        analyser.getByteFrequencyData(_this.data);
 
-        this.render();
+        _this.render();
 
         requestAnimationFrame(animation);
       })();
@@ -99,7 +99,7 @@ window.onload = function(){
   "use strict";
 
   const webgl = new Webgl();
-  webgl.meshes.push(Box(webgl));
+  webgl.meshes.push(new Box(webgl));
 
   /*
   let webgl = new Webgl();
