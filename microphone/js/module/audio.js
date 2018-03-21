@@ -5,6 +5,7 @@ class Audio{
   }
 
   init(){
+    this.webgl.render_random();
   }
 
   start(){
@@ -30,15 +31,14 @@ class Audio{
     }
 
     function _handleClick(evt) {
-      const LENGTH = 16;
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const options  = {mediaStream : evt};
       const src = audioCtx.createMediaStreamSource(evt);
       const analyser = audioCtx.createAnalyser(evt);
-      _this.data = new Uint8Array(LENGTH);
+      analyser.fftSize = 1024;
+      _this.data = new Uint8Array(analyser.fftSize);
 
       btn.classList.add("off");
-      analyser.fftSize = 1024;
       src.connect(analyser);
 
       (function animation(){

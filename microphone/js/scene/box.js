@@ -1,28 +1,3 @@
-class Box{
-  constructor(webgl){
-    this.webgl = webgl;
-    this.init();
-  }
-
-  init(){
-    const geometry = new THREE.BoxGeometry(100, 100, 100);
-    const material = new THREE.MeshNormalMaterial();
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.webgl.scene.add(this.mesh)
-  }
-
-  render(){
-    this.mesh.scale.set(
-      this.webgl.audio.data[1] / 50 + 0.0001,
-      this.webgl.audio.data[2] / 50 + 0.0001,
-      this.webgl.audio.data[3] / 50 + 0.0001,
-    );
-
-    this.mesh.rotation.y += 0.01;
-  }
-}
-
-/*
 function normRand(m, s){
   const a = 1 - Math.random();
   const b = 1 - Math.random();
@@ -45,7 +20,19 @@ class Box{
     const geometry = new THREE.BoxGeometry(100, 100, 100);
     const material = new THREE.MeshNormalMaterial();
     this.mesh = new THREE.Mesh(geometry, material);
-    this.webgl.scene.add(this.mesh);
+    this.webgl.scene.add(this.mesh)
+  }
+
+  setVisible(select){
+    this.mesh.visible = select;
+    if(select){
+      this.webgl.camera.position.set(0, 500, +1000);
+      this.webgl.camera.lookAt(this.webgl.scene.position);
+      this.webgl.control.enabled = true;
+      this.folder.open();
+    }else{
+      this.folder.close();
+    }
   }
 
   setGUI(){
@@ -62,18 +49,6 @@ class Box{
     this.folder.add(this.parameter, "minSizeZ", 0, 10.0);
     this.folder.add(this.parameter, "freqZ", 0, 1023);
     this.folder.close();
-  }
-
-  setVisible(select){
-    this.mesh.visible = select;
-    if(select){
-      this.webgl.camera.position.set(0, 500, +1000);
-      this.webgl.camera.lookAt(this.webgl.scene.position);
-      this.webgl.control.enabled = true;
-      this.folder.open();
-    }else{
-      this.folder.close();
-    }
   }
 
   render(){
@@ -105,14 +80,13 @@ const Parameter_box = function(){
 
   this.maxSizeX = 2.0;
   this.minSizeX = 0.1;
-  this.freqX = 200;
+  this.freqX = 20;
 
   this.maxSizeY = 2.0;
   this.minSizeY = 0.1;
-  this.freqY = 400;
+  this.freqY = 100;
 
   this.maxSizeZ = 2.0;
   this.minSizeZ = 0.1;
-  this.freqZ = 600;
+  this.freqZ = 200;
 }
-*/

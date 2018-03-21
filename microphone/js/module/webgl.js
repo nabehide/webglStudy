@@ -8,6 +8,9 @@ class Webgl{
 
     this.scene = new THREE.Scene();
 
+    this.gui = new dat.GUI();
+    this.gui.close();
+
     this.setProps();
 
     this.camera = new THREE.PerspectiveCamera(this.props.fov, this.props.aspect, this.props.near, this.props.far);
@@ -23,9 +26,6 @@ class Webgl{
     this.control.enabled = true;
 
     this.meshes = [];
-
-    this.camera.position.set(0, 500, +1000);
-    this.camera.lookAt(this.scene.position);
 
     this.resizeUpdate();
   }
@@ -61,5 +61,13 @@ class Webgl{
       this.meshes[0].render()
     }
     this.renderer.render(this.scene, this.camera);
+  }
+
+  render_random(){
+    for(let i=0; i<this.meshes.length; i++){
+      this.meshes[0].render_random()
+    }
+    this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(this.render_random.bind(this));
   }
 }
