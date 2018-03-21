@@ -1,7 +1,7 @@
 function normRand(m, s){
-  var a = 1 - Math.random();
-  var b = 1 - Math.random();
-  var c = Math.sqrt(-2 * Math.log(a));
+  const a = 1 - Math.random();
+  const b = 1 - Math.random();
+  const c = Math.sqrt(-2 * Math.log(a));
   if (0.5 < Math.random()){
     return c * Math.sin(Math.PI * 2 * b) * s + m;
   }else{
@@ -17,8 +17,8 @@ class Box{
   }
 
   init(){
-    var geometry = new THREE.BoxGeometry(100, 100, 100);
-    var material = new THREE.MeshNormalMaterial();
+    const geometry = new THREE.BoxGeometry(100, 100, 100);
+    const material = new THREE.MeshNormalMaterial();
     this.mesh = new THREE.Mesh(geometry, material);
     this.webgl.scene.add(this.mesh);
   }
@@ -52,9 +52,9 @@ class Box{
   }
 
   render(){
-    var x = this.parameter.freqX;
-    var y = this.parameter.freqY;
-    var z = this.parameter.freqZ;
+    const x = this.parameter.freqX;
+    const y = this.parameter.freqY;
+    const z = this.parameter.freqZ;
     this.mesh.scale.set(
       this.webgl.audio.data[x] / 100 * (this.parameter.maxSizeX - this.parameter.minSizeX) + this.parameter.minSizeX,
       this.webgl.audio.data[y] / 100 * (this.parameter.maxSizeY - this.parameter.minSizeY) + this.parameter.minSizeY,
@@ -75,7 +75,7 @@ class Box{
   }
 }
 
-var Parameter_box = function(){
+const Parameter_box = function(){
   this.speed = 0.01;
 
   this.maxSizeX = 2.0;

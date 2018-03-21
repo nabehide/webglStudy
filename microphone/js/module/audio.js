@@ -46,8 +46,8 @@ class Audio{
     */
 
     function _handleSuccess(stream){
-      var wrap = document.getElementById("overlayWrap");
-      var btn = document.getElementById("overlay");
+      const wrap = document.getElementById("overlayWrap");
+      const btn = document.getElementById("overlay");
 
       /*
       wrap.style.zIndex = 100;

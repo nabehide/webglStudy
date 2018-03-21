@@ -41,9 +41,9 @@ class Webgl{
   }
 
   setProps(){
-    var width = window.ResizeWatch.width;
-    var height = window.ResizeWatch.height;
-    var aspect = width / height;
+    const width = window.ResizeWatch.width;
+    const height = window.ResizeWatch.height;
+    const aspect = width / height;
 
     this.props = {
       width: width,
@@ -67,14 +67,14 @@ class Webgl{
   }
 
   render(){
-    for(var i=0; i<this.mesh.length; i++){
+    for(let i=0; i<this.mesh.length; i++){
       this.mesh[i].render();
     }
     this.renderer.render(this.scene, this.camera);
   }
 
   render_random(){
-    for(var i=0; i<this.mesh.length; i++){
+    for(let i=0; i<this.mesh.length; i++){
       this.mesh[i].render_random();
     }
     this.renderer.render(this.scene, this.camera);

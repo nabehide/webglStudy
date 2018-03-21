@@ -13,7 +13,7 @@ class ResizeWatch{
       this.height = window.innerHeight;
       this.aspect = this.width / this.height;
 
-      for(var i=0; i<this.instances.length; i++){
+      for(let i=0; i<this.instances.length; i++){
         this.instances[i].resizeUpdate();
       }
     }.bind(this)
