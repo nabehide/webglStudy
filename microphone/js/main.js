@@ -1,6 +1,7 @@
-var webgl = new Webgl();
 
 window.onload = function(){
+
+  let webgl = new Webgl();
 
   "use strict";
 
