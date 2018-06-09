@@ -1,0 +1,69 @@
+html, body {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+header {
+  position: absolute;
+  left: 0;
+  top: -100000px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+pre {
+  position: relative;
+  text-align: left;
+}
+
+#helpToggle{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#helpDiv{
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+}
+#helpIcon{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.openNav #helpIcon, .openNav #soundIcon{
+  color: rgba(255, 255, 255, 0.9);
+}
+header.openNav{
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+@media(min-width: 0px){
+  #helpToggle{
+    margin: 40px;
+    width: 60px;
+    height: 50px;
+  }
+  #helpDiv{
+    height: 50px;
+  }
+}
+@media(min-width: 1000px){
+  #helpToggle{
+    margin: 20px;
+    width: 30px;
+    height: 25px;
+  }
+  #helpDiv{
+    height: 25px;
+  }
+}
