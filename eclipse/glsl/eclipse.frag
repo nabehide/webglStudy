@@ -18,7 +18,7 @@ void main(void){
   color += smoothstep(0.7, 0.7-0.01, length(p));
 
   float MIN = -0.71;
-  float MAX = 0.71;
+  float MAX = 0.1;
 
   // float t = time-mod(time,1.);
   float t = 9.;
