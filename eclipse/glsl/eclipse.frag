@@ -13,17 +13,17 @@ float rand(vec2 co){
 void main(void){
   vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
 
-  float alpha = 0.;
+  float color = 0.;
 
-  // alpha += smoothstep(0.2, 0.2-0.05, length(p));
+  color += smoothstep(0.7, 0.7-0.01, length(p));
 
   // float t = time-mod(time,1.);
-  // float t = 34.;
-  // for(int i=0; i < int(2./width); i++){
-  //   float pos = -1.+width*float(i);
-  //   vec2 hv = step(vec2(-1.,pos), p) * step(p, vec2(rand(vec2(t+pos,t+pos))*2.-1.5,pos+width));
-  //   alpha -= hv.x * hv.y;
-  // }
+  float t = 34.;
+  for(int i=0; i < int(2./width); i++){
+    float pos = -1.+width*float(i);
+    vec2 hv = step(vec2(-1.,pos), p) * step(p, vec2(rand(vec2(t+pos,t+pos))*2.-1.5,pos+width));
+    color -= hv.x * hv.y;
+  }
 
-  gl_FragColor = vec4(0.5, 0.5, 0.5, alpha);
+  gl_FragColor = vec4(vec3(color), 1.);
 }
