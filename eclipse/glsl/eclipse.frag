@@ -15,7 +15,7 @@ void main(void){
 
   float alpha = 0.;
 
-  alpha += smoothstep(0.7, 0.7-0.05, length(p));
+  alpha += smoothstep(0.2, 0.2-0.05, length(p));
 
   // float t = time-mod(time,1.);
   // float t = 34.;
