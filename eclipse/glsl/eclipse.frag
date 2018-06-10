@@ -21,7 +21,7 @@ void main(void){
   float t = 9.;
   for(int i=0; i < int(2./width); i++){
     float pos = -1.+width*float(i);
-    vec2 hv = step(vec2(-0.7,pos), p) * step(p, vec2(rand(t+pos)*2.-1.4,pos+width));
+    vec2 hv = step(vec2(-0.7,pos), p) * step(p, vec2(0.,pos+width));
     color -= hv.x * hv.y;
   }
 
