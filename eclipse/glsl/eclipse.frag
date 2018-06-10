@@ -17,11 +17,14 @@ void main(void){
 
   color += smoothstep(0.7, 0.7-0.01, length(p));
 
+  float MIN = -0.71;
+  float MAX = 0.71;
+
   // float t = time-mod(time,1.);
   float t = 9.;
   for(int i=0; i < int(2./width); i++){
     float pos = -1.+width*float(i);
-    vec2 hv = step(vec2(-0.7,pos), p) * step(p, vec2(0.,pos+width));
+    vec2 hv = step(vec2(MIN,pos), p) * step(p, vec2((rand(t+pos))*(MAX-MIN)+MIN,pos+width));
     color -= hv.x * hv.y;
   }
 
