@@ -6,7 +6,7 @@ const float PI = 3.14159265;
 
 const float period = 3.;
 const float width = 0.05;
-const float offset = 12.;
+const float offset = 0.;
 
 float rand(float x){
   return fract(sin(x)*100000.);
@@ -20,27 +20,37 @@ void main(void){
 
   float t = mod(time,period);
 
-  for(int i=0; i<3; i++){
-    float size;
-    float size_i;
-    vec2 center = vec2(0.);
-    vec3 rgb = vec3(0.);
+  for(int i=0; i<10; i++){
+    float seed = floor((time+offset)/period+float(i));
     float stain = t/period;
-    float x = rand(floor((time+offset)/period)+float(i))*2.-1.;
-    float y = rand(floor((time+offset)/period)+float(i)+1.)*2.-1.;
-    if(i==0){  // yellow
-      size = 0.009*t;
-      size_i = 0.15*exp(t);
-      center = vec2(x,y);
+    float x = rand(seed)*2.-1.;
+    float y = rand(seed+1.)*2.-1.;
+    vec2 center = vec2(x,y);
+    float d = rand(float(i))*period/2.;
+    float ts = max(t-d,0.);
+
+    int sel = int(floor(rand(seed+2.)*3.));
+
+    float MAX_SIZE = 0.009;
+    float MIN_SIZE = 0.0005;
+    float size = rand(seed+3.)*(MAX_SIZE-MIN_SIZE)+MIN_SIZE;
+    float MAX_SIZE_I = 0.009;
+    float MIN_SIZE_I = 0.0005;
+    float size_i = rand(seed+4.)*(MAX_SIZE_I-MIN_SIZE_I)+MIN_SIZE_I;
+
+    vec3 rgb = vec3(0.);
+    if(sel==0){  // yellow
+      size = 0.009*(ts);
+      size_i = 0.15*exp(ts);
       rgb = bg-vec3(1.,1.,stain);
-    }else if(i==1){  // blue
-      size = 0.0015*t;
-      size_i = 0.1*exp(t);
+    }else if(sel==1){  // blue
+      size = 0.0015*(ts);
+      size_i = 0.1*exp(ts);
       center = vec2(x,y);
       rgb = bg-vec3(stain,0.5+0.5*stain,1.);
-    }else if(i==2){  // green
-      size = 0.0005*t;
-      size_i = 0.07*exp(t);
+    }else if(sel==2){  // green
+      size = 0.0005*(ts);
+      size_i = 0.07*exp(ts);
       center = vec2(x,y);
       rgb = bg-vec3(0.3+0.7*stain,1.,stain);
     }
