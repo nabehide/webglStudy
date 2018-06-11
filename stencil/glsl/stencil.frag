@@ -21,7 +21,7 @@ void main(void){
   float t = mod(time,period);
 
   for(int i=0; i<10; i++){
-    float seed = floor((time+offset)/period+float(i));
+    float seed = floor((time+offset)/period)+float(i);
     float stain = t/period;
     float x = rand(seed)*2.-1.;
     float y = rand(seed+1.)*2.-1.;
