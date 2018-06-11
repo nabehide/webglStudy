@@ -9,7 +9,7 @@ const float width = 0.05;
 const float offset = 0.;
 
 float rand(float x){
-  return fract(sin(x)*100000.);
+  return fract(sin(x)*100.);
 }
 
 void main(void){
