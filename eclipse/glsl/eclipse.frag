@@ -24,7 +24,7 @@ void main(void){
   float t = 9.;
   for(int i=0; i < int(2./width); i++){
     float pos = -1.+width*float(i);
-    vec2 hv = step(vec2(MIN,pos), p) * step(p, vec2(((sin((t+pos)*1000.)))*(MAX-MIN)+MIN,pos+width));
+    vec2 hv = step(vec2(MIN,pos), p) * step(p, vec2(((sin(radians((t+pos)*1000.))))*(MAX-MIN)+MIN,pos+width));
     color -= hv.x * hv.y;
   }
 
