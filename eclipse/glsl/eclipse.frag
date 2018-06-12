@@ -1,4 +1,6 @@
+#ifdef GL_ES
 precision mediump float;
+#endif
 uniform float time;
 uniform vec2  resolution;
 
@@ -18,13 +20,13 @@ void main(void){
   color += smoothstep(0.7, 0.7-0.01, length(p));
 
   float MIN = -0.71;
-  float MAX = 0.1;
+  float MAX = 0.7;
 
-  // float t = time-mod(time,1.);
+  // float t = mod(time,6.)-mod(time,0.1);
   float t = 9.;
   for(int i=0; i < int(2./width); i++){
     float pos = -1.+width*float(i);
-    vec2 hv = step(vec2(MIN,pos), p) * step(p, vec2(((sin(radians((t+pos)*1000.))))*(MAX-MIN)+MIN,pos+width));
+    vec2 hv = step(vec2(MIN,pos), p) * step(p, vec2(rand(pos+t)*(MAX-MIN)+MIN,pos+width));
     color -= hv.x * hv.y;
   }
 
