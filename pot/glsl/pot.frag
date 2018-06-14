@@ -52,7 +52,7 @@ void main(void){
     float re;
     float gr;
     float bl;
-    int sel=int(mod(float(t+i),3.));
+    int sel=int(floor(mod(float(t+i),3.)));
     if(sel==0){
       re = 49./255.;
       gr = 49./255.;
@@ -66,7 +66,7 @@ void main(void){
       gr = 182./255.;
       bl = 46./255.;
     }
-    color -= (1.-vec3(re,gr,bl)) * rect(p,le,up,ri,dw,0.0001);
+    color -= (1.-vec3(re,gr,bl)) * rect(p,le,up,ri,dw,a);
   }
 
   gl_FragColor = vec4(vec3(color), 1.);
