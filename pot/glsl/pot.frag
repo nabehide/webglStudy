@@ -24,16 +24,16 @@ void main(void){
   pot += rect(p,-0.4,0.1,0.4,-0.2,0.0001);
 
   // left handle
-  pot += rect(p,-0.5,0.05,-0.4,-0.05,0.0001);
-  pot -= rect(p,-0.5+handle_size,0.05-handle_size,-0.4,-0.05+handle_size,0.0001);
+  // pot += rect(p,-0.5,0.05,-0.4,-0.05,0.0001);
+  // pot -= rect(p,-0.5+handle_size,0.05-handle_size,-0.4,-0.05+handle_size,0.0001);
 
   // right handle
-  pot += rect(p,0.4,0.05,0.5,-0.05,0.0001);
-  pot -= rect(p,0.4,0.05-handle_size,0.5-handle_size,-0.05+handle_size,0.0001);
+  // pot += rect(p,0.4,0.05,0.5,-0.05,0.0001);
+  // pot -= rect(p,0.4,0.05-handle_size,0.5-handle_size,-0.05+handle_size,0.0001);
 
   // lid
-  pot += rect(p,-0.05,0.15+lid_thick,0.05,0.1+lid_thick,0.0001);
-  pot += rect(p,-0.42,0.1+lid_thick,0.42,0.1,0.0001);
+  // pot += rect(p,-0.05,0.15+lid_thick,0.05,0.1+lid_thick,0.0001);
+  // pot += rect(p,-0.42,0.1+lid_thick,0.42,0.1,0.0001);
 
   color += vec3(pot);
 
