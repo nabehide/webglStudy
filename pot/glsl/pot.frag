@@ -41,7 +41,6 @@ void main(void){
 
   color += vec3(pot);
 
-  int t = int(mod(time,3.)-mod(time,1.));
   for(int i=0; i<3; i++){
     float offset = 0.2;
     float le = float(i)*0.1-0.2+offset;
@@ -52,12 +51,12 @@ void main(void){
     float re;
     float gr;
     float bl;
-    int sel=int(floor(mod(float(t+i),3.)));
-    if(sel==0){
+    float sel = mod(float(i)+time,3.);
+    if(sel<1.){
       re = 49./255.;
       gr = 49./255.;
       bl = 92./255.;
-    }else if(sel==1){
+    }else if(sel<2.){
       re = 147./255.;
       gr = 0./255.;
       bl = 86./255.;
