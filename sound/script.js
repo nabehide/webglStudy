@@ -6,20 +6,23 @@ var uniLocation = new Array();
 
 window.onload = function(){
   const webgl = new Webgl("glsl/pot");
-  const audio = new Audio("glsl/sound.frag");
+  const audio = new Audio("glsl/sound");
 
-  const waitUntilImportShader = function() {
-    if(webgl.isReady && audio.isReady){
-      webgl.start();
-      audio.start();
-      return;
+  const btn = document.getElementById("soundDiv");
+  btn.addEventListener("click", () => {
+    const waitUntilImportShader = function() {
+      if(webgl.isReady && audio.isReady){
+        webgl.start();
+        audio.start();
+        return;
+      }
+      console.log(webgl.isReady);
+      console.log(audio.isReady);
+      clearTimeout(id);
+      id = setTimeout(waitUntilImportShader, 1000);
     }
-    console.log(webgl.isReady);
-    console.log(audio.isReady);
-    clearTimeout(id);
-    id = setTimeout(waitUntilImportShader, 1000);
-  }
-  id =  setTimeout(waitUntilImportShader, 1000);
+    id =  setTimeout(waitUntilImportShader, 1000);
+  });
 }
 
 class Audio{
@@ -31,7 +34,7 @@ class Audio{
     this.WIDTH = 512;
     this.HEIGHT = 512;
 
-    this.fragShader = [glsl_file];
+    this.fragShader = [glsl_file+".frag"];
     this.importFrag(0);
   }
 
@@ -333,5 +336,11 @@ $(function() {
   $('#helpDiv').click(function() {
     $('.code').toggleClass('openNav');
     $('#helpDiv').toggleClass('openNav');
+  });
+});
+
+$(function() {
+  $('#soundDiv').click(function() {
+    $('#soundDiv').toggleClass('openNav');
   });
 });

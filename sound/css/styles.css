@@ -39,12 +39,17 @@ pre {
   bottom: 0;
   right: 0;
 }
-#helpDiv{
+#soundToggle{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#helpDiv, #soundDiv{
   position: relative;
   cursor: pointer;
   z-index: 1;
 }
-#helpIcon{
+#helpIcon, #soundIcon{
   display: block;
   position: absolute;
   width: 100%;
@@ -60,22 +65,22 @@ header.openNav{
 }
 
 @media(min-width: 0px){
-  #helpToggle{
+  #helpToggle, #soundToggle{
     margin: 40px;
     width: 60px;
     height: 50px;
   }
-  #helpDiv{
+  #helpDiv, #soundDiv{
     height: 50px;
   }
 }
 @media(min-width: 1000px){
-  #helpToggle{
+  #helpToggle, #soundToggle{
     margin: 20px;
     width: 30px;
     height: 25px;
   }
-  #helpDiv{
+  #helpDiv, #soundDiv{
     height: 25px;
   }
 }
