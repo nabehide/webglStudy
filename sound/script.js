@@ -12,6 +12,7 @@ window.onload = function(){
   btn.addEventListener("click", () => {
     const waitUntilImportShader = function() {
       if(webgl.isReady && audio.isReady){
+        audio.init();
         webgl.start();
         audio.start();
         return;
@@ -52,12 +53,13 @@ class Audio{
   }
 
   completeImport(){
-    this.init();
+    // this.init();
+    this.isReady = true;
   }
 
   init(){
     // Create audio context
-    const ctx = new window.AudioContext();
+    const ctx = (window.AudioContext) ? new AudioContext : new webkitAudioContext;
     this.node = ctx.createBufferSource();
     this.node.connect(ctx.destination);
     this.node.loop = true;
@@ -106,7 +108,6 @@ class Audio{
         outputDataR[i * samples + j] = (pixels[j * 4 + 2] + 256 * pixels[j * 4 + 3]) / 65535 * 2 - 1;
       }
     }
-    this.isReady = true;
   }
 
   start(){

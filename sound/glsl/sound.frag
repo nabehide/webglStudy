@@ -13,9 +13,8 @@ float tri(in float freq, in float time) {
 vec2 mainSound( float time )
 {
   float freq = 110.;
-  // freq *= (1.+floor(mod(time, 6.));
-  // freq *= fract(rand(fract(mod(time,1.))) * 6.);
-  freq *= (1.+floor(rand(floor(time))*6.));
+  freq *= (1.+floor(mod(time, 6.)));
+  // freq *= (1.+floor(rand(floor(time))*6.));
   return vec2(
     tri(freq, time)*0.5,
     tri(freq, time)*0.5
