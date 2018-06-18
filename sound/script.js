@@ -17,8 +17,6 @@ window.onload = function(){
         audio.start();
         return;
       }
-      console.log(webgl.isReady);
-      console.log(audio.isReady);
       clearTimeout(id);
       id = setTimeout(waitUntilImportShader, 1000);
     }
@@ -29,7 +27,7 @@ window.onload = function(){
 class Audio{
   constructor(glsl_file){
     this.isReady = false;
-    this.DURATION = 6; // Loop 3 sec
+    this.DURATION = 16; // Loop 3 sec
 
     // Size of render target
     this.WIDTH = 512;
