@@ -7,6 +7,7 @@ uniform vec2  resolution;
 const float PI = 3.14159265;
 const int Ncircle = 21;
 const float period = 3.;
+const float speed = 1.;
 
 float hue2rgb(float f1, float f2, float hue) {
   if (hue < 0.0)
@@ -51,6 +52,22 @@ float rand(vec2 co){
   return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
+float noise(float s, float o){
+  float i = floor(s);
+  float f = fract(s);
+  float u = f * f * (3. - 2. * f);
+
+  float s1 = rand(vec2(i/100.,i*o/100.));
+  float s2;
+  if(s < period-1.){
+     s2 = rand(vec2((i+1.)/100.,(i+1.)*o/100.));
+  }else{
+     s2 = rand(vec2(0.,0.));
+  }
+
+  return mix(s1, s2, u);
+}
+
 float circle(vec2 p, vec2 pos, float scale){
   return 0.004 * scale / pow(length(p-pos),2.);
 }
@@ -67,15 +84,25 @@ void main(void){
 
   float t = mod(time, period)/period*360.;
 
-  p *= rot(radians(-10.+0.2*sin(radians(t))));
-  p.y += 0.002*pow(sin(radians(t)),2.);
+  vec2 pos = p * rot(radians(-10.+0.2*sin(radians(t))));
+  pos.y += 0.002*pow(sin(radians(t)),2.);
 
   for(int i=0; i < Ncircle; i++){
-    float scale = 0.05 * rand(vec2(float(i))) * (10.+1.5*sin(radians(t+2000.*rand(vec2(float(i))))));
-    float circle = min(circle(p, vec2(float(i)/float(Ncircle-1)*2.-1.,0.), scale),0.5);
-    float h = 210./360. + rand(vec2(float(i)))*0.2 + sin(radians(t+2000.*rand(vec2(float(i)))))*rand(vec2(float(i)))*0.1;
-    float s = 80./100.;
-    float l = 44./100.;
+    float tt = mod((time+pow(float(i)*0.73,2.))*speed, period);
+
+    // float scale = 0.05 * rand(vec2(float(i))) * (10.+1.5*sin(radians(t+2000.*rand(vec2(float(i))))));
+    float scale = 0.05 * rand(vec2(float(i))) * (10.+5.*noise(tt,float(i)*0.1));
+
+    // float circle = min(circle(p, vec2(float(i)/float(Ncircle-1)*2.-1.,0.), scale),0.5);
+    float circle = min(circle(vec2(pos.x, pos.y+noise(tt,float(i)*0.2)*0.02), vec2(float(i)/float(Ncircle-1)*2.-1.,0.), scale),0.5);
+
+    // float h = 210./360. + rand(vec2(float(i)))*0.2 + sin(radians(t+2000.*rand(vec2(float(i)))))*rand(vec2(float(i)))*0.1;
+    // float h = 210./360. + rand(vec2(float(i)))*0.2 + sin(radians(tt/period*360.))*rand(vec2(float(i)))*0.1;
+    float h = 200./360. + rand(vec2(float(i)))*0.2 + noise(tt,float(i)*0.3)*0.1;
+    // float s = 80./100.;
+    float s = 78./100. + rand(vec2(float(i)))*0.05 + noise(tt,float(i)*0.4)*0.05;
+    // float l = 44./100.;
+    float l = 42./100. + rand(vec2(float(i)))*0.05 + noise(tt,float(i)*0.5)*0.05;
     color += hsl2rgb(vec3(h,s,l)) * circle;
   }
 
