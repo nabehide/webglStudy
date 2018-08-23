@@ -138,7 +138,7 @@ float bug(vec2 p, float index, float t, float t2){
 
   float MAX_S = 2.0;
   float MIN_S = 0.5;
-  float s = max((sin(t+random)*PI/2. - 0.5)*(random*(MAX_S-MIN_S)+MIN_S), 0.);
+  float s = max((sin(t+random*0.8-0.4)*PI/2. - 0.5)*(random*(MAX_S-MIN_S)+MIN_S), 0.);
 
   return min(0.001 / pow(length(p - pos), 1.0), 0.4) * s;
 }
