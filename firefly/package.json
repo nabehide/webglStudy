@@ -1,0 +1,21 @@
+{
+  "name": "firefly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "glslify ./glsl/index.frag -o glsl/source.frag"
+  },
+  "author": "nabehide",
+  "license": "ISC",
+  "devDependencies": {
+    "glslify": "^6.2.1",
+    "glslify-import": "^3.1.0",
+    "live-server": "^1.2.0"
+  },
+  "glslify": {
+    "transform": [
+      "glslify-import"
+    ]
+  }
+}
