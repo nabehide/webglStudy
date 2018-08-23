@@ -11,7 +11,7 @@ const int NGrass = 100;
 const int NCloud = 1;
 const int NBug = 9;
 const float period = 3.;
-const float offset = 3.;
+const float offset = 0.;
 
 float rand(vec2 co){
   return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
@@ -77,7 +77,7 @@ float grass(vec2 p, vec2 a, vec2 wind){
 
 float grasses(vec2 p){
   float draw = 0.;
-  for(int i=0; i<NGrass; i++){
+  for(int i=0; i < NGrass; i++){
     float posX = rand(vec2(float(i))) * 2. - 0.5;
 
     float MAX_AX = 0.04;
@@ -112,7 +112,7 @@ float cloud(in vec2 p, in float t, in float index){
 
 float clouds(in vec2 p, float t){
   float draw = 0.;
-  for(int i=0; i<NCloud; i++){
+  for(int i=0; i < NCloud; i++){
     draw += cloud(p, t, float(i));
   }
   draw = min(1., draw);
@@ -145,7 +145,7 @@ float bug(vec2 p, float index, float t, float t2){
 
 float bugs(vec2 p, float t){
   float draw = 0.;
-  for(int i=0; i<NBug; i++){
+  for(int i=0; i < NBug; i++){
     draw += bug(p, float(i), t, floor(time/period+offset));
   }
   return draw;
