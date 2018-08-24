@@ -4,11 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "glslify ./glsl/index.frag -o glsl/source.frag"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "debug": "^3.1.0",
+    "glslify": "^6.2.1",
+    "glslify-import": "^3.1.0",
     "live-server": "^1.2.0"
+  },
+  "glslify": {
+    "transform": [
+      "glslify-import"
+    ]
   }
 }
